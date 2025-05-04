@@ -1,6 +1,6 @@
 import { Image, ImageBackground, Text, View } from 'react-native'
-import React, { Component } from 'react'
 
+import React from 'react'
 import { Tabs } from 'expo-router'
 import { icons } from '@/constants/icons'
 import { images } from '@/constants/images'
@@ -13,13 +13,13 @@ const TabIcon = ({ focused, icon, label }: any) => {
       style={{
         opacity: focused ? 1 : 0.8, // Apply opacity based on focused state
       }}
-      className="flex flex-row w-full flex-1 min-w-[112px] min-h-14
+      className="flex flex-row w-full flex-1 min-w-[112px] min-h-16
        mt-4 justify-center items-center rounded-full overflow-hidden"
     >
       <Image 
         source={icon}
         tintColor="#151312" 
-        className="size-5 mr-2" // Added margin-right to create gap
+        className="size-5 mr-1" // Added margin-right to create gap
       />
       <Text className='text-secondery text-base font-semibold'>{label}</Text>
     </ImageBackground>
