@@ -5,8 +5,11 @@ import { Link } from 'expo-router';
 import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from '@/constants/images';
+import { useRouter } from "expo-router";
 
 export default function Index() {
+  const router = useRouter();
+  
   const { height } = Dimensions.get('window');
   
   return (
@@ -42,8 +45,11 @@ export default function Index() {
         />
         
         {/* Add more content here to make it scrollable */}
-        <View className="flex-1 mt-5">
-          <SearchBar />
+        <View style={{ flex: 1, marginTop: 20 }}>
+          <SearchBar 
+            onPress={() => router.push('/search')}
+            placeholder="Search for a movie"
+          />
         </View>
       </ScrollView>
     </View>

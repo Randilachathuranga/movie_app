@@ -83,20 +83,6 @@ export default function TabLayout() {
         }} 
       />
 
-      <Tabs.Screen
-        name="saved" 
-        options={{ 
-          title: 'Saved',
-          headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <TabIcon 
-              focused={focused} 
-              icon={icons.save} 
-              label="Saved"
-            />
-          )
-        }} 
-      />
 
       <Tabs.Screen
         name="search" 
@@ -112,6 +98,22 @@ export default function TabLayout() {
           ) 
         }} 
       />
+
+<Tabs.Screen
+        name="saved" 
+        options={{ 
+          title: 'Saved',
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon 
+              focused={focused} 
+              icon={icons.save} 
+              label="Saved"
+            />
+          )
+        }} 
+      />
+
 
       <Tabs.Screen
         name="profile" 
