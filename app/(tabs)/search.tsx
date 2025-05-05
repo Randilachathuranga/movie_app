@@ -1,28 +1,43 @@
-import { useRouter } from "expo-router";
-import { ActivityIndicator, FlatList, Image, SafeAreaView, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, SafeAreaView, Text, View } from "react-native";
 
 import MovieCard from "@/components/MovieCard";
+import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
-import SearchBar from "@/components/SearchBar";
+import { useEffect, useState } from "react";
 
 const Search = () => {
-  const router = useRouter();
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const {
     data: movies,
     loading: moviesLoading,
     error: moviesError,
-  } = useFetch(() =>
-    fetchMovies({
-      query: "", // Will fetch popular movies if empty
-    })
-  );
+    refetch: loadMovies,
+    reset,
+  } = useFetch(() =>fetchMovies({
+      query: searchQuery,
+    }));
+
+    //search movies when the searchQuery changes
+    useEffect(()=>{
+      const timeoutId = setTimeout(async () => {
+      if (searchQuery.trim()) {
+        await loadMovies();
+      }else{
+        reset();
+      }
+    }, 500); // 500ms delay to avoid too many requests
+
+    return () => clearTimeout(timeoutId); // Cleanup the timeout on unmount or when searchQuery changes
+
+    }, [searchQuery])
 
   return (
-    <SafeAreaView className="flex-1 bg-primary">
+    <View className="flex-1 bg-primary">
       {/* Background image */}
       <Image
         source={images.bg}
@@ -35,14 +50,26 @@ const Search = () => {
       />
 
      
-        <FlatList
-          data={movies}
-          renderItem={({ item }) => <MovieCard {...item} />}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={3}
-          columnWrapperStyle={{ justifyContent: "space-between", paddingHorizontal: 10 }}
-          contentContainerStyle={{ paddingVertical: 20 }}
+          <FlatList
+            data={movies}
+            renderItem={({ item }) => (
+              // all movie cards
+              <MovieCard  
+                {...item}
+              />
+            )}
 
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={3}
+            columnWrapperStyle={{
+              justifyContent: 'flex-start',
+              gap: 20,
+              marginRight: 5,
+              marginBottom: 10,
+            }}
+            className="mt-2 pb-32"
+            scrollEnabled={false}
+            
           ListHeaderComponent={
             <>
               <View className="w-full flex-row justify-center mt-20">
@@ -59,7 +86,11 @@ const Search = () => {
               </View>
 
               <View className="my-5 px-4">
-                <SearchBar placeholder="Search for a movie" onPress={() => router.push('/search')} />
+                <SearchBar placeholder="Search for a movie"
+                value={searchQuery}
+                onChangeText={(text) => setSearchQuery(text)}
+                onPress={() => {}}
+                />
               </View>
 
               {moviesLoading && (
@@ -70,13 +101,44 @@ const Search = () => {
               />
             )}
 
+            {moviesError && (
+              <Text className="text-red-500 px-5 my-3">
+                Error: {moviesError.message}
+              </Text>
+            )}   
+
+
+            {!moviesLoading && !moviesError && searchQuery.trim() && (movies ?? []).length > 0
+            && (
+              <Text className="text-xl text-white font-bold mb-3 px-5">
+                Search Results
+                <Text className="text-accent">  {searchQuery}</Text>
+              </Text>
+            )}
             </>
           }
+
+          ListEmptyComponent={
+            <View className="flex-1 justify-center items-center mt-10">
+              <Image
+                source={icons.search}
+                style={{
+                  width: 100,
+                  height: 100,
+                }}
+                resizeMode="contain"
+              />
+              <Text className="text-white text-lg font-bold mt-5">
+                No Movies Found
+              </Text>
+            </View>
+          }
+
 
         />
 
       
-    </SafeAreaView>
+    </View>
   );
 };
 
