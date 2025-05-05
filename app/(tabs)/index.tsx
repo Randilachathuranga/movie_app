@@ -1,14 +1,23 @@
-import { Dimensions, Image, ScrollView, View } from "react-native";
+import { Dimensions, FlatList, Image, ScrollView, Text, View } from "react-native";
 
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { Link } from 'expo-router';
+import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from '@/constants/images';
+import { fetchMovies } from "@/services/api";
+import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
 
 export default function Index() {
   const router = useRouter();
+  
+  const {
+    data: movies,
+    loading: moviesLoading,
+    error: moviesError 
+  } = useFetch(() => fetchMovies({
+    query: ''
+  }));
   
   const { height } = Dimensions.get('window');
   
@@ -38,18 +47,45 @@ export default function Index() {
           style={{
             width: 70,
             height: 70,
-            marginTop: 50,
+            marginTop: 95,
             marginBottom: 20,
           }}
           resizeMode="contain"
         />
         
-        {/* Add more content here to make it scrollable */}
-        <View style={{ flex: 1, marginTop: 20 }}>
-          <SearchBar 
+        <View style={{ flex: 1, marginTop: 20, width: '100%' }}>
+          <SearchBar
             onPress={() => router.push('/search')}
             placeholder="Search for a movie"
           />
+          
+    
+          <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold', marginTop: 20, marginBottom: 12 }}>
+            Latest Movies
+          </Text>
+               
+          <FlatList
+            data={movies}
+            renderItem={({ item }) => (
+              // all movie cards
+              <MovieCard  
+                {...item}
+              />
+            )}
+
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={3}
+            columnWrapperStyle={{
+              justifyContent: 'flex-start',
+              gap: 20,
+              marginRight: 5,
+              marginBottom: 10,
+            }}
+
+            className="mt-2 pb-32"
+            scrollEnabled={false}
+          />
+     
         </View>
       </ScrollView>
     </View>
