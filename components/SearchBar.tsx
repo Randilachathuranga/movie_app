@@ -1,13 +1,13 @@
-import React from 'react';
 import { Image, TextInput, View } from 'react-native';
 
+import React from 'react';
 import { icons } from '@/constants/icons';
 
 interface Props {
   placeholder: string;
-  onPress: () => void;
-  value: string;
-  onChangeText: (text: string) => void;
+  onPress?: () => void;
+  value?: string;
+  onChangeText?: (text: string) => void;
 }
 
 export default function SearchBar({placeholder, onPress , value, onChangeText} : Props) {

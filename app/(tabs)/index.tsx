@@ -2,14 +2,22 @@ import { Dimensions, FlatList, Image, ScrollView, Text, View } from "react-nativ
 
 import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
+import TrendingCard from "@/components/TrendingCard";
+import { fetchMovies } from "@/services/api";
+import { getTrendingMovies } from "@/services/appwrite";
 import { icons } from "@/constants/icons";
 import { images } from '@/constants/images';
-import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
 
 export default function Index() {
   const router = useRouter();
+
+  const {
+    data: trendingMovies,
+    loading: trendingMoviesLoading,
+    error: trendingMoviesError 
+  } = useFetch(getTrendingMovies)
   
   const {
     data: movies,
@@ -57,10 +65,29 @@ export default function Index() {
           <SearchBar
             onPress={() => router.push('/search')}
             placeholder="Search for a movie"
-            value=""
-            onChangeText={() => {}}
           />
           
+          {trendingMovies && (
+              <View className="mt-10">
+                <Text className="text-lg text-white font-bold mb-3">
+                  Trending Movies
+                </Text>
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  className="mb-4 mt-3"
+                  data={trendingMovies}
+                  contentContainerStyle={{
+                    gap: 26,
+                  }}
+                  renderItem={({ item, index }) => (
+                    <TrendingCard movie={item} index={index} />
+                  )}
+                  keyExtractor={(item) => item.movie_id.toString()}
+                  ItemSeparatorComponent={() => <View className="w-4" />}
+                />
+              </View>
+            )}
     
           <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold', marginTop: 20, marginBottom: 12 }}>
             Latest Movies

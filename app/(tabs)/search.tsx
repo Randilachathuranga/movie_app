@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ActivityIndicator, Dimensions, FlatList, Image, ScrollView, Text, View } from "react-native";
 
 import MovieCard from "@/components/MovieCard";
@@ -5,8 +6,8 @@ import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
+import { updateSearchCount } from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
-import { useEffect, useState } from "react";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,6 +27,7 @@ const Search = () => {
 
   // Fetch movies initially and when the searchQuery changes
   useEffect(() => {
+        
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim() || searchQuery === "") {
         await loadMovies();
@@ -36,6 +38,12 @@ const Search = () => {
 
     return () => clearTimeout(timeoutId); // Cleanup the timeout on unmount or when searchQuery changes
   }, [searchQuery]);
+
+  useEffect(()=>{
+    if((movies ?? []).length > 0 && movies?.[0] ){
+      updateSearchCount(searchQuery, movies?.[0]);
+    }
+  },[movies])
 
   // Trigger initial fetch when the component mounts
   useEffect(() => {
@@ -81,7 +89,6 @@ const Search = () => {
             placeholder="Search for a movie"
             value={searchQuery}
             onChangeText={(text) => setSearchQuery(text)}
-            onPress={() => {}}
           />
         </View>
 
