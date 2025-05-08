@@ -1,14 +1,17 @@
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Image, Text, View } from "react-native";
 
-export class saved extends Component {
-  render() {
-    return (
-      <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-5xl text-secondary font-bold">Saved</Text>
-    </View>
-    )
-  }
-}
+import { SafeAreaView } from "react-native-safe-area-context";
+import { icons } from "@/constants/icons";
 
-export default saved
+const Save = () => {
+  return (
+    <SafeAreaView className="bg-primary flex-1 px-10">
+      <View className="flex justify-center items-center flex-1 flex-col gap-5">
+        <Image source={icons.save} className="size-10" tintColor="#fff" />
+        <Text className="text-gray-500 text-base">Save</Text>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default Save;
