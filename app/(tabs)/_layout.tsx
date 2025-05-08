@@ -100,15 +100,15 @@ export default function TabLayout() {
       />
 
 <Tabs.Screen
-        name="saved" 
+        name="Chatbot" 
         options={{ 
-          title: 'Saved',
+          title: 'Chatbot',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon 
               focused={focused} 
               icon={icons.save} 
-              label="Saved"
+              label="Chatbot"
             />
           )
         }} 
