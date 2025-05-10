@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
 import { ActivityIndicator, Dimensions, FlatList, Image, ScrollView, Text, View } from "react-native";
+import { useEffect, useState } from "react";
 
 import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
+import { fetchMovies } from "@/services/api";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
-import { fetchMovies } from "@/services/api";
 import { updateSearchCount } from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
 
@@ -75,8 +75,8 @@ const Search = () => {
           <Image
             source={icons.logo}
             style={{
-              width: 70,
-              height: 70,
+              width: 170,
+              height: 170,
               marginTop: 95,
               marginBottom: 20,
             }}

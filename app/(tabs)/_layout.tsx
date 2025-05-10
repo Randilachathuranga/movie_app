@@ -107,7 +107,7 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <TabIcon 
               focused={focused} 
-              icon={icons.save} 
+              icon={icons.arrow} 
               label="Chatbot"
             />
           )

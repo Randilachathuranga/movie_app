@@ -53,8 +53,8 @@ export default function Index() {
         <Image
           source={icons.logo}
           style={{
-            width: 70,
-            height: 70,
+            width: 170,
+            height: 170,
             marginTop: 95,
             marginBottom: 20,
           }}
