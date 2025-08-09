@@ -8,7 +8,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "env:cloud": "node scripts/setup-env.js cloud",
+    "env:android": "node scripts/setup-env.js android-sim",
+    "env:ios": "node scripts/setup-env.js ios-sim",
+    "env:local": "node scripts/setup-env.js local"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",

@@ -75,3 +75,35 @@ interface TrendingCardProps {
   movie: TrendingMovie;
   index: number;
 }
+
+interface Message {
+  id: string;
+  text: string;
+  isUser: boolean;
+  timestamp: Date;
+}
+
+interface UserProfile {
+  name: string;
+  email: string;
+  joinDate: string;
+  favoriteGenre: string;
+  moviesWatched: number;
+  watchlistCount: number;
+}
+
+interface AuthUser {
+  $id: string;
+  name: string;
+  email: string;
+  $createdAt: string;
+}
+
+interface AuthContextType {
+  user: AuthUser | null;
+  isLoading: boolean;
+  isLoggedIn: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string, name: string) => Promise<void>;
+  logout: () => Promise<void>;
+}

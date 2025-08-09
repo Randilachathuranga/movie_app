@@ -1,9 +1,11 @@
+import { config } from "@/config";
+
 export const TMDB_CONFIG = {
-    BASE_URL: "https://api.themoviedb.org/3",
-    API_KEY: process.env.EXPO_PUBLIC_MOVIE_API_KEY,
+    BASE_URL: config.tmdb.baseUrl,
+    API_KEY: config.tmdb.apiKey,
     headers: {
       accept: "application/json",
-      Authorization: `Bearer ${process.env.EXPO_PUBLIC_MOVIE_API_KEY}`,
+      Authorization: `Bearer ${config.tmdb.apiKey}`,
     },
   };
   

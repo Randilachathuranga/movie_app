@@ -1,9 +1,9 @@
 import { Image, ImageBackground, Text, View } from 'react-native'
 
-import React from 'react'
-import { Tabs } from 'expo-router'
 import { icons } from '@/constants/icons'
 import { images } from '@/constants/images'
+import { Tabs } from 'expo-router'
+import React from 'react'
 
 const TabIcon = ({ focused, icon, label }: any) => {
  if(focused) {
@@ -107,7 +107,7 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <TabIcon 
               focused={focused} 
-              icon={icons.arrow} 
+              icon={icons.save} 
               label="Chatbot"
             />
           )
